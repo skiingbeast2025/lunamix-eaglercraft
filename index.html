@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lunamix Eaglercraft — Standalone Minecraft Web Arcade</title>
+  <title>Eaglercraft 26.3 — Standalone Minecraft Web Arcade</title>
   <meta name="description" content="Play all 18 versions and modded clients of Eaglercraft directly in your browser. Fast, 60 FPS WebAssembly Minecraft with multiplayer server support.">
   <link rel="shortcut icon" href="https://skiingbeast2025.github.io/lunamix/assets/logos/favicon.svg" type="image/svg+xml">
 
@@ -75,75 +75,45 @@
 </head>
 <body class="font-sans antialiased selection:bg-emerald-500 selection:text-black flex flex-col justify-between min-h-screen">
 
-  <!-- Header -->
-  <header class="sticky top-0 z-40 w-full border-b border-emerald-950/60 bg-slate-950/80 backdrop-blur-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      
-      <!-- Logo & Hub Brand -->
-      <div class="flex items-center gap-3">
-        <a href="./index.html" class="flex items-center gap-2.5 group">
-          <div class="w-9 h-9 rounded-xl bg-emerald-950/80 border border-emerald-800/80 flex items-center justify-center text-xl shadow-inner group-hover:border-emerald-500 transition-colors">
-            ⛏️
-          </div>
-          <div class="flex flex-col">
-            <span class="font-mono text-base sm:text-lg font-extrabold tracking-wider text-white flex items-center gap-1.5">
-              EAGLERCRAFT
-              <span class="text-[10px] px-1.5 py-0.2 font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded">HUB</span>
-            </span>
-            <span class="text-[10px] text-slate-400 font-mono tracking-tight hidden sm:block">Powered by Lunamix Arcade</span>
-          </div>
-        </a>
+  <!-- Main Game Section (Header removed) -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+
+    <!-- Embedded Player Iframe Container -->
+    <div id="player-frame-wrapper" class="relative w-full aspect-video sm:h-[72vh] rounded-2xl overflow-hidden bg-black border border-emerald-950 shadow-2xl mb-4">
+      <iframe 
+        id="player-iframe" 
+        src="./downloads/26.3.html"
+        class="w-full h-full border-0"
+        allow="autoplay; fullscreen; gamepad; focus-without-user-activation *"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+      ></iframe>
+    </div>
+
+    <!-- Active Player Bar (Moved BELOW the game) -->
+    <div class="mb-6 p-3 sm:p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-wrap items-center justify-between gap-3 glow-box">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <h2 id="active-title" class="text-sm sm:text-base font-bold text-white tracking-wide">
+          Eaglercraft 26.3
+        </h2>
+        <span id="active-tag" class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+          LATEST
+        </span>
       </div>
 
-      <!-- Controls -->
-      <div class="flex items-center gap-2.5 sm:gap-3">
-        <!-- Quick Version Dropdown -->
-        <div class="relative flex items-center">
-          <select 
-            id="version-dropdown" 
-            class="appearance-none bg-slate-900/90 border border-emerald-900/60 text-xs text-emerald-300 hover:text-white rounded-lg pl-3 pr-7 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-400 transition-all cursor-pointer font-mono"
-            onchange="loadVersion(this.value)"
-          >
-            <!-- Populated via JS -->
-          </select>
-          <div class="pointer-events-none absolute right-2 flex items-center text-emerald-400">
-            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
-
-        <!-- Back to Lunamix Main Arcade -->
+      <!-- Player Actions & Back Link -->
+      <div class="flex items-center gap-2">
         <a 
           href="https://skiingbeast2025.github.io/lunamix/" 
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-500 transition-all"
+          class="px-2.5 py-1.5 rounded-xl text-xs font-medium text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-1.5 cursor-pointer"
+          title="Back to Lunamix Arcade"
         >
           <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          <span class="hidden sm:inline">Lunamix</span> Arcade
+          <span class="hidden sm:inline">Lunamix</span>
         </a>
-      </div>
-    </div>
-  </header>
 
-  <!-- In-Page Player Section -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-    <!-- Active Player Bar -->
-    <div class="mb-4 p-3 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-wrap items-center justify-between gap-3 glow-box">
-      <div class="flex items-center gap-2.5">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-        <h2 id="active-title" class="text-sm sm:text-base font-bold text-white tracking-wide">
-          Eaglercraft 1.8.8
-        </h2>
-        <span id="active-tag" class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-          STABLE
-        </span>
-      </div>
-
-      <!-- Player Actions -->
-      <div class="flex items-center gap-2">
         <button 
           type="button" 
           onclick="reloadPlayer()"
@@ -182,42 +152,7 @@
       </div>
     </div>
 
-    <!-- Embedded Player Iframe Container -->
-    <div id="player-frame-wrapper" class="relative w-full aspect-video sm:h-[68vh] rounded-2xl overflow-hidden bg-black border border-emerald-950 shadow-2xl mb-8">
-      <iframe 
-        id="player-iframe" 
-        src="./downloads/1.8.8.html"
-        class="w-full h-full border-0"
-        allow="autoplay; fullscreen; gamepad; focus-without-user-activation *"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
-      ></iframe>
-    </div>
-
-    <!-- Catalog Header & Search Filter -->
-    <div class="mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>
-        <h3 class="text-xl font-extrabold text-white">All 18 Versions & Modded Clients</h3>
-        <p class="text-xs text-slate-400">Click any card to immediately switch the player or open in a new tab</p>
-      </div>
-
-      <!-- Quick Filter Pills -->
-      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
-        <button onclick="filterCategory('all')" class="cat-pill active px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-500 text-black cursor-pointer">
-          All (18)
-        </button>
-        <button onclick="filterCategory('release')" class="cat-pill px-3 py-1 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white border border-slate-800 cursor-pointer">
-          Releases
-        </button>
-        <button onclick="filterCategory('classic')" class="cat-pill px-3 py-1 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white border border-slate-800 cursor-pointer">
-          Classic
-        </button>
-        <button onclick="filterCategory('client')" class="cat-pill px-3 py-1 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white border border-slate-800 cursor-pointer">
-          Modded Clients
-        </button>
-      </div>
-    </div>
-
-    <!-- Version Card Grid -->
+    <!-- Version Card Grid (Title row removed, sits directly below active bar) -->
     <div id="version-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 mb-12">
       <!-- Populated via JS -->
     </div>
@@ -233,15 +168,15 @@
 
   <script>
     const VERSIONS = [
-      { id: '1.8.8', name: 'Eaglercraft 1.8.8', category: 'classic', type: 'Release', desc: 'The most popular PvP version with full multiplayer server support', tag: 'RECOMMENDED', file: '1.8.8.html' },
-      { id: '1.12.2', name: 'Eaglercraft 1.12.2', category: 'release', type: 'Release', desc: 'World of Color update with recipe book and glazed terracotta', tag: 'POPULAR', file: '1.12.2.html' },
       { id: '26.3', name: 'Eaglercraft 26.3', category: 'release', type: 'Release', desc: 'Latest experimental client build with cutting-edge shaders', tag: 'LATEST', file: '26.3.html' },
       { id: '26.2', name: 'Eaglercraft 26.2', category: 'release', type: 'Release', desc: 'High performance modern build with extended draw distance', tag: 'STABLE', file: '26.2.html' },
       { id: '1.20.6', name: 'Eaglercraft 1.20.6', category: 'release', type: 'Release', desc: 'Trails & Tales edition featuring armor trims and archaeology', tag: 'MODERN', file: '1.20.6.html' },
       { id: '1.16.5', name: 'Eaglercraft 1.16.5', category: 'release', type: 'Release', desc: 'Nether Update edition with Netherite, Piglins, and Crimson forests', tag: 'MAJOR', file: '1.16.5.html' },
       { id: '1.14.4', name: 'Eaglercraft 1.14.4', category: 'release', type: 'Release', desc: 'Village & Pillage edition with crossbows, pillagers, and new villages', tag: 'UPDATE', file: '1.14.4.html' },
+      { id: '1.12.2', name: 'Eaglercraft 1.12.2', category: 'release', type: 'Release', desc: 'World of Color update with recipe book and glazed terracotta', tag: 'POPULAR', file: '1.12.2.html' },
       { id: '1.11.2', name: 'Eaglercraft 1.11.2', category: 'release', type: 'Release', desc: 'Exploration Update with Mansions, Totems, and Shulker boxes', tag: 'STABLE', file: '1.11.2.html' },
       { id: '1.9.4', name: 'Eaglercraft 1.9.4', category: 'release', type: 'Release', desc: 'Combat Update edition with dual wielding and Elytra wings', tag: 'CLASSIC', file: '1.9.4.html' },
+      { id: '1.8.8', name: 'Eaglercraft 1.8.8', category: 'classic', type: 'Release', desc: 'The most popular PvP version with full multiplayer server support', tag: 'RECOMMENDED', file: '1.8.8.html' },
       { id: '1.5.2', name: 'Eaglercraft 1.5.2', category: 'classic', type: 'Classic', desc: 'Redstone Update edition with hoppers, droppers, and quartz', tag: 'RETRO', file: '1.5.2.html' },
       { id: 'beta1.3', name: 'Eaglercraft Beta 1.3', category: 'classic', type: 'Retro', desc: 'Nostalgic Minecraft Beta with original terrain generation and beds', tag: 'BETA', file: 'beta1.3.html' },
       { id: 'alpha1.2.6', name: 'Eaglercraft Alpha 1.2.6', category: 'classic', type: 'Retro', desc: 'Original Halloween Alpha release with Nether introduction', tag: 'ALPHA', file: 'alpha1.2.6.html' },
@@ -253,8 +188,7 @@
       { id: 'tuff', name: 'Tuff Client', category: 'client', type: 'PvP Client', desc: 'Feature-rich custom client with scoreboard toggles and cleaner UI', tag: 'PVP CLIENT', file: 'tuff.html' },
     ];
 
-    let currentVersionId = '1.8.8';
-    let currentCategory = 'all';
+    let currentVersionId = '26.3';
 
     function init() {
       // Check query params
@@ -264,25 +198,13 @@
         currentVersionId = v;
       }
 
-      populateDropdown();
       renderGrid();
       loadVersion(currentVersionId, false);
     }
 
-    function populateDropdown() {
-      const dd = document.getElementById('version-dropdown');
-      dd.innerHTML = VERSIONS.map(v => 
-        `<option value="${v.id}" ${v.id === currentVersionId ? 'selected' : ''}>${v.name}</option>`
-      ).join('');
-    }
-
     function renderGrid() {
       const grid = document.getElementById('version-grid');
-      const filtered = currentCategory === 'all' 
-        ? VERSIONS 
-        : VERSIONS.filter(v => v.category === currentCategory);
-
-      grid.innerHTML = filtered.map(v => `
+      grid.innerHTML = VERSIONS.map(v => `
         <div 
           onclick="loadVersion('${v.id}')"
           class="client-card p-4 rounded-xl border border-slate-800 bg-slate-900/80 hover:bg-slate-800/80 cursor-pointer flex flex-col justify-between ${v.id === currentVersionId ? 'active' : ''}"
@@ -318,8 +240,6 @@
       const iframe = document.getElementById('player-iframe');
       iframe.src = `./downloads/${v.file}`;
 
-      document.getElementById('version-dropdown').value = id;
-
       document.querySelectorAll('.client-card').forEach(c => {
         if (c.getAttribute('data-id') === id) {
           c.classList.add('active');
@@ -331,17 +251,6 @@
       if (scroll && window.innerWidth < 640) {
         document.getElementById('player-frame-wrapper').scrollIntoView({ behavior: 'smooth' });
       }
-    }
-
-    function filterCategory(cat) {
-      currentCategory = cat;
-      document.querySelectorAll('.cat-pill').forEach(btn => {
-        btn.classList.remove('active', 'bg-emerald-500', 'text-black');
-        btn.classList.add('bg-slate-900', 'text-slate-300');
-      });
-      event.target.classList.add('active', 'bg-emerald-500', 'text-black');
-      event.target.classList.remove('bg-slate-900', 'text-slate-300');
-      renderGrid();
     }
 
     function reloadPlayer() {
