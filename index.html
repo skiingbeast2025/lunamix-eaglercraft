@@ -93,8 +93,9 @@
         id="player-iframe" 
         src="./downloads/26.3.html"
         class="w-full h-full border-0"
-        allow="autoplay; fullscreen; gamepad; focus-without-user-activation *"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+        tabindex="0"
+        allow="autoplay; fullscreen; gamepad; focus-without-user-activation; pointer-lock *; keyboard-map *; clipboard-read; clipboard-write"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-pointer-lock"
       ></iframe>
     </div>
 
@@ -298,6 +299,14 @@
         }
       });
 
+      const wrapper = document.getElementById('player-frame-wrapper');
+      if (wrapper) {
+        wrapper.addEventListener('click', () => {
+          const iframe = document.getElementById('player-iframe');
+          if (iframe) iframe.focus();
+        });
+      }
+
       renderGrid();
       loadVersion(currentVersionId, false);
     }
@@ -384,6 +393,7 @@
       
       const iframe = document.getElementById('player-iframe');
       iframe.src = `./downloads/${v.file}`;
+      iframe.onload = () => { iframe.focus(); };
 
       document.querySelectorAll('.client-card').forEach(c => {
         if (c.getAttribute('data-id') === id) {
@@ -401,12 +411,16 @@
     function reloadPlayer() {
       const iframe = document.getElementById('player-iframe');
       iframe.src = iframe.src;
+      iframe.focus();
     }
 
     function toggleFullscreen() {
       const wrapper = document.getElementById('player-frame-wrapper');
+      const iframe = document.getElementById('player-iframe');
       if (!document.fullscreenElement) {
-        wrapper.requestFullscreen().catch(() => {});
+        wrapper.requestFullscreen().then(() => {
+          if (iframe) iframe.focus();
+        }).catch(() => {});
       } else {
         document.exitFullscreen().catch(() => {});
       }
