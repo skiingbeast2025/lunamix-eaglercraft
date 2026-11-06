@@ -1,6 +1,6 @@
-# Lunamix Eaglercraft Hub ⛏️
+# Lunamix Eaglercraft Hub
 
-High-performance, 100% client-side WebAssembly Minecraft suite featuring all 18 official and modded Eaglercraft single-file clients.
+High-performance, 100% client-side WebAssembly Minecraft suite featuring 18 official and modded Eaglercraft single-file clients.
 
 Playable live directly in your browser: [https://skiingbeast2025.github.io/lunamix-eaglercraft/](https://skiingbeast2025.github.io/lunamix-eaglercraft/)
 
